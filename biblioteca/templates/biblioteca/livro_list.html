@@ -1,0 +1,50 @@
+{% extends 'biblioteca/base.html' %}
+
+{% block title %}Lista de Livros - Sistema de Biblioteca{% endblock %}
+
+{% block content %}
+<h2>📖 Lista de Livros</h2>
+
+{% if livros %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Gênero</th>
+            <th>Ano</th>
+            <th>ISBN</th>
+            <th>Editora</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for livro in livros %}
+        <tr>
+            <td>{{ livro.id }}</td>
+            <td><strong>{{ livro.titulo }}</strong></td>
+            <td>{{ livro.autor.nome }}</td>
+            <td>{{ livro.get_genero_display }}</td>
+            <td>{{ livro.ano_publicacao }}</td>
+            <td>{{ livro.isbn }}</td>
+            <td>{{ livro.editora }}</td>
+            <td>
+                <div class="actions">
+                    <a href="{% url 'livro_update' livro.pk %}" class="btn btn-primary">✏️ Editar</a>
+                    <a href="{% url 'livro_delete' livro.pk %}" class="btn btn-danger">🗑️ Excluir</a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="empty-state">
+    <h3>Nenhum livro cadastrado</h3>
+    <p>Comece adicionando um novo livro ao sistema.</p>
+    <br>
+    <a href="{% url 'livro_create' %}" class="btn btn-primary">+ Adicionar Primeiro Livro</a>
+</div>
+{% endif %}
+{% endblock %}

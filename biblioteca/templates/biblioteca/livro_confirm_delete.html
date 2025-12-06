@@ -1,0 +1,50 @@
+{% extends 'biblioteca/base.html' %}
+
+{% block title %}Excluir Livro - Sistema de Biblioteca{% endblock %}
+
+{% block content %}
+<h2>🗑️ Confirmar Exclusão</h2>
+
+<div class="alert alert-warning">
+    <strong>⚠️ Atenção!</strong> Você está prestes a excluir o livro abaixo. Esta ação não pode ser desfeita.
+</div>
+
+<table>
+    <tr>
+        <th>Título:</th>
+        <td>{{ livro.titulo }}</td>
+    </tr>
+    <tr>
+        <th>Autor:</th>
+        <td>{{ livro.autor.nome }}</td>
+    </tr>
+    <tr>
+        <th>ISBN:</th>
+        <td>{{ livro.isbn }}</td>
+    </tr>
+    <tr>
+        <th>Gênero:</th>
+        <td>{{ livro.get_genero_display }}</td>
+    </tr>
+    <tr>
+        <th>Ano de Publicação:</th>
+        <td>{{ livro.ano_publicacao }}</td>
+    </tr>
+    <tr>
+        <th>Editora:</th>
+        <td>{{ livro.editora }}</td>
+    </tr>
+    <tr>
+        <th>Número de Páginas:</th>
+        <td>{{ livro.numero_paginas }}</td>
+    </tr>
+</table>
+
+<form method="post" style="margin-top: 30px;">
+    {% csrf_token %}
+    <div class="actions">
+        <button type="submit" class="btn btn-danger">🗑️ Sim, Excluir</button>
+        <a href="{% url 'livro_list' %}" class="btn btn-secondary">❌ Cancelar</a>
+    </div>
+</form>
+{% endblock %}

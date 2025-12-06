@@ -1,0 +1,45 @@
+{% extends 'biblioteca/base.html' %}
+
+{% block title %}Excluir Autor - Sistema de Biblioteca{% endblock %}
+
+{% block content %}
+<h2>🗑️ Confirmar Exclusão</h2>
+
+<div class="alert alert-warning">
+    <strong>⚠️ Atenção!</strong> Você está prestes a excluir o autor abaixo. Esta ação não pode ser desfeita.
+</div>
+
+<table>
+    <tr>
+        <th>Nome:</th>
+        <td>{{ autor.nome }}</td>
+    </tr>
+    <tr>
+        <th>Nacionalidade:</th>
+        <td>{{ autor.nacionalidade }}</td>
+    </tr>
+    <tr>
+        <th>Data de Nascimento:</th>
+        <td>{{ autor.data_nascimento|date:"d/m/Y" }}</td>
+    </tr>
+    <tr>
+        <th>Quantidade de Livros:</th>
+        <td>{{ autor.quantidade_livros }}</td>
+    </tr>
+</table>
+
+{% if autor.quantidade_livros > 0 %}
+<div class="alert alert-warning" style="margin-top: 20px;">
+    <strong>⚠️ Aviso:</strong> Este autor possui {{ autor.quantidade_livros }} livro(s) cadastrado(s). 
+    Ao excluir o autor, todos os livros associados também serão excluídos.
+</div>
+{% endif %}
+
+<form method="post" style="margin-top: 30px;">
+    {% csrf_token %}
+    <div class="actions">
+        <button type="submit" class="btn btn-danger">🗑️ Sim, Excluir</button>
+        <a href="{% url 'autor_list' %}" class="btn btn-secondary">❌ Cancelar</a>
+    </div>
+</form>
+{% endblock %}
