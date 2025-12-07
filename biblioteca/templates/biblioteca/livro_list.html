@@ -43,8 +43,12 @@
 <div class="empty-state">
     <h3>Nenhum livro cadastrado</h3>
     <p>Comece adicionando um novo livro ao sistema.</p>
+    <p style="color: #718096; font-size: 14px; margin-top: 10px;">
+        💡 Dica: Cadastre alguns autores primeiro antes de adicionar livros.
+    </p>
     <br>
-    <a href="{% url 'livro_create' %}" class="btn btn-primary">+ Adicionar Primeiro Livro</a>
+    <a href="{% url 'autor_create' %}" class="btn btn-secondary">👤 Cadastrar Autores Primeiro</a>
+    <a href="{% url 'livro_create' %}" class="btn btn-primary">+ Adicionar Livro</a>
 </div>
 {% endif %}
 {% endblock %}

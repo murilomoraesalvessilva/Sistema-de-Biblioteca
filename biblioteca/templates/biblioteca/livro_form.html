@@ -1,0 +1,89 @@
+{% extends 'biblioteca/base.html' %}
+
+{% block title %}
+    {% if livro %}Editar Livro{% else %}Novo Livro{% endif %} - Sistema de Biblioteca
+{% endblock %}
+
+{% block content %}
+<h2>{% if livro %}✏️ Editar Livro{% else %}+ Novo Livro{% endif %}</h2>
+
+{% if not autores and not livro %}
+<div class="alert alert-warning">
+    <strong>⚠️ Atenção!</strong> Você precisa cadastrar pelo menos um autor antes de adicionar livros.
+    <br><br>
+    <a href="{% url 'autor_create' %}" class="btn btn-primary">+ Cadastrar Primeiro Autor</a>
+    <a href="{% url 'autor_list' %}" class="btn btn-secondary">📋 Ver Autores</a>
+</div>
+{% else %}
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="titulo">Título *</label>
+        <input type="text" id="titulo" name="titulo" value="{{ livro.titulo|default:'' }}" required>
+    </div>
+
+    <div class="form-group">
+        <label for="autor">Autor *</label>
+        <select id="autor" name="autor" required>
+            <option value="">Selecione um autor</option>
+            {% for autor in autores %}
+            <option value="{{ autor.id }}" {% if livro.autor.id == autor.id %}selected{% endif %}>
+                {{ autor.nome }}
+            </option>
+            {% endfor %}
+        </select>
+        {% if not autores %}
+        <small style="color: #e53e3e; display: block; margin-top: 5px;">
+            ⚠️ Nenhum autor cadastrado. <a href="{% url 'autor_create' %}">Clique aqui para cadastrar</a>
+        </small>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="isbn">ISBN *</label>
+        <input type="text" id="isbn" name="isbn" value="{{ livro.isbn|default:'' }}" required maxlength="13" placeholder="Ex: 9788535911664">
+        <small style="color: #718096; display: block; margin-top: 5px;">
+            ISBN com 13 dígitos (sem traços ou espaços)
+        </small>
+    </div>
+
+    <div class="form-group">
+        <label for="genero">Gênero *</label>
+        <select id="genero" name="genero" required>
+            <option value="">Selecione um gênero</option>
+            {% for codigo, nome in generos %}
+            <option value="{{ codigo }}" {% if livro.genero == codigo %}selected{% endif %}>
+                {{ nome }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="ano_publicacao">Ano de Publicação *</label>
+        <input type="number" id="ano_publicacao" name="ano_publicacao" value="{{ livro.ano_publicacao|default:'' }}" required min="1000" max="2100" placeholder="Ex: 2024">
+    </div>
+
+    <div class="form-group">
+        <label for="numero_paginas">Número de Páginas *</label>
+        <input type="number" id="numero_paginas" name="numero_paginas" value="{{ livro.numero_paginas|default:'' }}" required min="1" placeholder="Ex: 256">
+    </div>
+
+    <div class="form-group">
+        <label for="editora">Editora *</label>
+        <input type="text" id="editora" name="editora" value="{{ livro.editora|default:'' }}" required placeholder="Ex: Companhia das Letras">
+    </div>
+
+    <div class="form-group">
+        <label for="sinopse">Sinopse</label>
+        <textarea id="sinopse" name="sinopse" placeholder="Digite aqui um resumo do livro...">{{ livro.sinopse|default:'' }}</textarea>
+    </div>
+
+    <div class="actions">
+        <button type="submit" class="btn btn-success">💾 Salvar</button>
+        <a href="{% url 'livro_list' %}" class="btn btn-secondary">❌ Cancelar</a>
+    </div>
+</form>
+{% endif %}
+{% endblock %}
