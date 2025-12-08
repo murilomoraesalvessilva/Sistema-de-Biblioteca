@@ -2,12 +2,26 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .models import Autor, Livro
 
+# ==================== VIEWS DE AUTORES ====================
+
 def autor_list(request):
+    """Lista todos os autores"""
     autores = Autor.objects.all()
     return render(request, 'biblioteca/autor_list.html', {'autores': autores})
 
 
+def autor_detail(request, pk):
+    """Exibe detalhes de um autor"""
+    autor = get_object_or_404(Autor, pk=pk)
+    livros = autor.livros.all()
+    return render(request, 'biblioteca/autor_detail.html', {
+        'autor': autor,
+        'livros': livros
+    })
+
+
 def autor_create(request):
+    """Cria um novo autor"""
     if request.method == 'POST':
         nome = request.POST.get('nome')
         nacionalidade = request.POST.get('nacionalidade')
@@ -26,6 +40,7 @@ def autor_create(request):
 
 
 def autor_update(request, pk):
+    """Edita um autor existente"""
     autor = get_object_or_404(Autor, pk=pk)
     
     if request.method == 'POST':
@@ -40,6 +55,7 @@ def autor_update(request, pk):
 
 
 def autor_delete(request, pk):
+    """Exclui um autor"""
     autor = get_object_or_404(Autor, pk=pk)
     
     if request.method == 'POST':
@@ -48,12 +64,23 @@ def autor_delete(request, pk):
     
     return render(request, 'biblioteca/autor_confirm_delete.html', {'autor': autor})
 
+
+# ==================== VIEWS DE LIVROS ====================
+
 def livro_list(request):
+    """Lista todos os livros"""
     livros = Livro.objects.all().select_related('autor')
     return render(request, 'biblioteca/livro_list.html', {'livros': livros})
 
 
+def livro_detail(request, pk):
+    """Exibe detalhes de um livro"""
+    livro = get_object_or_404(Livro, pk=pk)
+    return render(request, 'biblioteca/livro_detail.html', {'livro': livro})
+
+
 def livro_create(request):
+    """Cria um novo livro"""
     if request.method == 'POST':
         titulo = request.POST.get('titulo')
         autor_id = request.POST.get('autor')
@@ -85,6 +112,7 @@ def livro_create(request):
 
 
 def livro_update(request, pk):
+    """Edita um livro existente"""
     livro = get_object_or_404(Livro, pk=pk)
     
     if request.method == 'POST':
@@ -109,6 +137,7 @@ def livro_update(request, pk):
 
 
 def livro_delete(request, pk):
+    """Exclui um livro"""
     livro = get_object_or_404(Livro, pk=pk)
     
     if request.method == 'POST':

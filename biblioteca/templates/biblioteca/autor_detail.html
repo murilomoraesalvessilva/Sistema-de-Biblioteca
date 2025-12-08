@@ -1,0 +1,99 @@
+{% extends 'biblioteca/base.html' %}
+
+{% block title %}{{ autor.nome }} - Sistema de Biblioteca{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+    <a href="{% url 'autor_list' %}" class="btn btn-secondary">← Voltar para Lista</a>
+</div>
+
+<div style="background: var(--card-bg); border-radius: 15px; padding: 40px; box-shadow: 0 10px 30px var(--shadow); animation: fadeIn 0.5s ease;">
+    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 30px; flex-wrap: wrap; gap: 20px;">
+        <div>
+            <h2 style="margin: 0; border: none; padding: 0;">👤 {{ autor.nome }}</h2>
+            <p style="color: var(--text-secondary); font-size: 18px; margin-top: 10px;">
+                <strong>Nacionalidade:</strong> {{ autor.nacionalidade }}
+            </p>
+        </div>
+        <div class="actions">
+            <a href="{% url 'autor_update' autor.pk %}" class="btn btn-primary">✏️ Editar</a>
+            <a href="{% url 'autor_delete' autor.pk %}" class="btn btn-danger">🗑️ Excluir</a>
+        </div>
+    </div>
+
+    <div style="border-top: 2px solid var(--border-color); padding-top: 30px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-bottom: 30px;">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 12px; color: white; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
+                <div style="font-size: 14px; opacity: 0.9; margin-bottom: 5px;">Data de Nascimento</div>
+                <div style="font-size: 24px; font-weight: 700;">{{ autor.data_nascimento|date:"d/m/Y" }}</div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); padding: 25px; border-radius: 12px; color: white; box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);">
+                <div style="font-size: 14px; opacity: 0.9; margin-bottom: 5px;">Total de Livros</div>
+                <div style="font-size: 24px; font-weight: 700;">{{ livros.count }} {% if livros.count == 1 %}livro{% else %}livros{% endif %}</div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%); padding: 25px; border-radius: 12px; color: white; box-shadow: 0 4px 15px rgba(246, 173, 85, 0.3);">
+                <div style="font-size: 14px; opacity: 0.9; margin-bottom: 5px;">Cadastrado em</div>
+                <div style="font-size: 24px; font-weight: 700;">{{ autor.data_cadastro|date:"d/m/Y" }}</div>
+            </div>
+        </div>
+
+        {% if autor.biografia %}
+        <div style="margin-top: 30px;">
+            <h3 style="color: var(--text-primary); margin-bottom: 15px; font-size: 1.5em;">📖 Biografia</h3>
+            <p style="color: var(--text-secondary); line-height: 1.8; font-size: 16px; text-align: justify;">
+                {{ autor.biografia }}
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div style="margin-top: 40px;">
+    <h3 style="color: var(--text-primary); font-size: 1.8em; margin-bottom: 20px;">📚 Livros do Autor</h3>
+    
+    {% if livros %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px;">
+        {% for livro in livros %}
+        <div style="background: var(--card-bg); border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px var(--shadow); transition: all 0.3s; border: 2px solid var(--border-color);" 
+             onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px var(--shadow)'"
+             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px var(--shadow)'">
+            
+            <h4 style="color: var(--text-primary); font-size: 1.3em; margin-bottom: 15px; min-height: 60px;">
+                📖 {{ livro.titulo }}
+            </h4>
+            
+            <div style="color: var(--text-secondary); margin-bottom: 15px; line-height: 1.8;">
+                <p><strong>ISBN:</strong> {{ livro.isbn }}</p>
+                <p><strong>Gênero:</strong> {{ livro.get_genero_display }}</p>
+                <p><strong>Ano:</strong> {{ livro.ano_publicacao }}</p>
+                <p><strong>Páginas:</strong> {{ livro.numero_paginas }}</p>
+                <p><strong>Editora:</strong> {{ livro.editora }}</p>
+            </div>
+            
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                <a href="{% url 'livro_detail' livro.pk %}" class="btn btn-primary" style="width: 100%; text-align: center; display: block;">
+                    Ver Detalhes
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="background: var(--card-bg); border-radius: 12px; padding: 40px; text-align: center; color: var(--text-secondary); box-shadow: 0 4px 15px var(--shadow);">
+        <div style="font-size: 60px; margin-bottom: 15px;">📚</div>
+        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Nenhum livro cadastrado</h4>
+        <p>Este autor ainda não possui livros cadastrados no sistema.</p>
+        <div style="margin-top: 20px;">
+            <a href="{% url 'livro_create' %}" class="btn btn-primary">➕ Adicionar Primeiro Livro</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<div style="margin-top: 40px; text-align: center;">
+    <a href="{% url 'autor_list' %}" class="btn btn-secondary">← Voltar para Lista de Autores</a>
+</div>
+
+{% endblock %}

@@ -31,7 +31,8 @@
             <td>{{ livro.editora }}</td>
             <td>
                 <div class="actions">
-                    <a href="{% url 'livro_update' livro.pk %}" class="btn btn-primary">✏️ Editar</a>
+                    <a href="{% url 'livro_detail' livro.pk %}" class="btn btn-primary">👁️ Ver</a>
+                    <a href="{% url 'livro_update' livro.pk %}" class="btn btn-success">✏️ Editar</a>
                     <a href="{% url 'livro_delete' livro.pk %}" class="btn btn-danger">🗑️ Excluir</a>
                 </div>
             </td>
@@ -48,7 +49,7 @@
     </p>
     <br>
     <a href="{% url 'autor_create' %}" class="btn btn-secondary">👤 Cadastrar Autores Primeiro</a>
-    <a href="{% url 'livro_create' %}" class="btn btn-primary">+ Adicionar Livro</a>
+    <a href="{% url 'livro_create' %}" class="btn btn-primary">➕ Adicionar Livro</a>
 </div>
 {% endif %}
 {% endblock %}
