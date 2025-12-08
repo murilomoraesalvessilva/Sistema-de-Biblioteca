@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<h2>{% if livro %}Editar Livro{% else %}Novo Livro{% endif %}</h2>
+<h2>{% if livro %}✏️ Editar Livro{% else %}Novo Livro{% endif %}</h2>
 
 {% if not autores and not livro %}
 <div class="alert alert-warning">
@@ -28,16 +28,11 @@
         <select id="autor" name="autor" required>
             <option value="">Selecione um autor</option>
             {% for autor in autores %}
-            <option value="{{ autor.id }}" {% if livro.autor.id = autor.id %}selected{% endif %}>
+            <option value="{{ autor.id }}" {% if livro and livro.autor.id == autor.id %}selected{% endif %}>
                 {{ autor.nome }}
             </option>
             {% endfor %}
         </select>
-        {% if not autores %}
-        <small style="color: #e53e3e; display: block; margin-top: 5px;">
-            ⚠️ Nenhum autor cadastrado. <a href="{% url 'autor_create' %}">Clique aqui para cadastrar</a>
-        </small>
-        {% endif %}
     </div>
 
     <div class="form-group">
@@ -53,7 +48,7 @@
         <select id="genero" name="genero" required>
             <option value="">Selecione um gênero</option>
             {% for codigo, nome in generos %}
-            <option value="{{ codigo }}" {% if livro.genero = codigo %}selected{% endif %}>
+            <option value="{{ codigo }}" {% if livro and livro.genero == codigo %}selected{% endif %}>
                 {{ nome }}
             </option>
             {% endfor %}
