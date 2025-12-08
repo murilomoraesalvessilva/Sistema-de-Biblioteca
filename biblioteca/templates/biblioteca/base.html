@@ -550,9 +550,9 @@
 
         <nav>
             <a href="{% url 'autor_list' %}">👤 Autores</a>
-            <a href="{% url 'autor_create' %}">➕ Novo Autor</a>
+            <a href="{% url 'autor_create' %}">+ Novo Autor</a>
             <a href="{% url 'livro_list' %}">📖 Livros</a>
-            <a href="{% url 'livro_create' %}">➕ Novo Livro</a>
+            <a href="{% url 'livro_create' %}">+ Novo Livro</a>
         </nav>
 
         <div class="content">
@@ -587,10 +587,10 @@
             
             if (theme === 'dark') {
                 icon.textContent = '☀️';
-                text.textContent = 'Modo Claro';
+                text.textContent = '';
             } else {
                 icon.textContent = '🌙';
-                text.textContent = 'Modo Escuro';
+                text.textContent = '';
             }
         }
     </script>

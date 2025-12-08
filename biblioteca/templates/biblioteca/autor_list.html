@@ -3,7 +3,7 @@
 {% block title %}Lista de Autores - Sistema de Biblioteca{% endblock %}
 
 {% block content %}
-<h2>👤 Lista de Autores</h2>
+<h2>Lista de Autores</h2>
 
 {% if autores %}
 <table>
@@ -27,9 +27,9 @@
             <td>{{ autor.quantidade_livros }}</td>
             <td>
                 <div class="actions">
-                    <a href="{% url 'autor_detail' autor.pk %}" class="btn btn-primary">👁️ Ver</a>
-                    <a href="{% url 'autor_update' autor.pk %}" class="btn btn-success">✏️ Editar</a>
-                    <a href="{% url 'autor_delete' autor.pk %}" class="btn btn-danger">🗑️ Excluir</a>
+                    <a href="{% url 'autor_detail' autor.pk %}" class="btn btn-primary">Ver</a>
+                    <a href="{% url 'autor_update' autor.pk %}" class="btn btn-success">Editar</a>
+                    <a href="{% url 'autor_delete' autor.pk %}" class="btn btn-danger">Excluir</a>
                 </div>
             </td>
         </tr>
@@ -41,7 +41,7 @@
     <h3>Nenhum autor cadastrado</h3>
     <p>Comece adicionando um novo autor ao sistema.</p>
     <br>
-    <a href="{% url 'autor_create' %}" class="btn btn-primary">➕ Adicionar Primeiro Autor</a>
+    <a href="{% url 'autor_create' %}" class="btn btn-primary">Adicionar Primeiro Autor</a>
 </div>
 {% endif %}
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block title %}Lista de Livros - Sistema de Biblioteca{% endblock %}
 
 {% block content %}
-<h2>📖 Lista de Livros</h2>
+<h2>Lista de Livros</h2>
 
 {% if livros %}
 <table>
@@ -48,8 +48,8 @@
         💡 Dica: Cadastre alguns autores primeiro antes de adicionar livros.
     </p>
     <br>
-    <a href="{% url 'autor_create' %}" class="btn btn-secondary">👤 Cadastrar Autores Primeiro</a>
-    <a href="{% url 'livro_create' %}" class="btn btn-primary">➕ Adicionar Livro</a>
+    <a href="{% url 'autor_create' %}" class="btn btn-secondary">Cadastrar Autores Primeiro</a>
+    <a href="{% url 'livro_create' %}" class="btn btn-primary">Adicionar Livro</a>
 </div>
 {% endif %}
 {% endblock %}

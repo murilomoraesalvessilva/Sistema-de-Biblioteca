@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<h2>{% if autor %}✏️ Editar Autor{% else %}+ Novo Autor{% endif %}</h2>
+<h2>{% if autor %}✏️ Editar Autor{% else %}Novo Autor{% endif %}</h2>
 
 <form method="post">
     {% csrf_token %}
@@ -31,8 +31,8 @@
     </div>
 
     <div class="actions">
-        <button type="submit" class="btn btn-success">💾 Salvar</button>
-        <a href="{% url 'autor_list' %}" class="btn btn-secondary">❌ Cancelar</a>
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a href="{% url 'autor_list' %}" class="btn btn-secondary">Cancelar</a>
     </div>
 </form>
 {% endblock %}
